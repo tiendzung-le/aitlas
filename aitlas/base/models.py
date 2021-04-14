@@ -370,13 +370,11 @@ class BaseModel(nn.Module, Configurable):
             for cm in calculated_metrics:
                 for key in cm:
                     metric = cm[key]
-                    if isinstance(metric, list):
+                    if isinstance(metric, list) or (metric.ndim > 0):
                         for i, sub in enumerate(metric):
                             writer.add_scalar(f"{key}/{labels[i]}/{tag}", sub, epoch)
                     else:
-                        for i, sub in enumerate(metric):
-                            writer.add_scalar(f"{key}/{labels[i]}/{tag}", sub, epoch)
-                        # writer.add_scalar(f"{key}/{tag}", metric, epoch)
+                        writer.add_scalar(f"{key}/{tag}", metric, epoch)
 
     def allocate_device(self, opts=None):
         """
