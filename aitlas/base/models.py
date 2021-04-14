@@ -374,7 +374,9 @@ class BaseModel(nn.Module, Configurable):
                         for i, sub in enumerate(metric):
                             writer.add_scalar(f"{key}/{labels[i]}/{tag}", sub, epoch)
                     else:
-                        writer.add_scalar(f"{key}/{tag}", metric, epoch)
+                        for i, sub in enumerate(metric):
+                            writer.add_scalar(f"{key}/{labels[i]}/{tag}", sub, epoch)
+                        # writer.add_scalar(f"{key}/{tag}", metric, epoch)
 
     def allocate_device(self, opts=None):
         """
